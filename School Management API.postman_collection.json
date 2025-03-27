@@ -1,0 +1,90 @@
+{
+  "info": {
+    "name": "School Management API",
+    "description": "A collection of requests for testing the School Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Add School",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Sample School\",\n    \"address\": \"123 Education St\",\n    \"latitude\": 34.0522,\n    \"longitude\": -118.2437\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/addSchool",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "addSchool"
+          ]
+        },
+        "description": "Add a new school to the database"
+      },
+      "response": []
+    },
+    {
+      "name": "List Schools",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/listSchools?latitude=34.0522&longitude=-118.2437",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "listSchools"
+          ],
+          "query": [
+            {
+              "key": "latitude",
+              "value": "34.0522"
+            },
+            {
+              "key": "longitude",
+              "value": "-118.2437"
+            }
+          ]
+        },
+        "description": "List all schools sorted by proximity to the provided coordinates"
+      },
+      "response": []
+    },
+    {
+      "name": "Home",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            ""
+          ]
+        },
+        "description": "Get API information and available endpoints"
+      },
+      "response": []
+    }
+  ]
+} 
