@@ -2,20 +2,18 @@ const mysql = require('mysql2/promise');
 require('dotenv').config();
 
 async function initializeDatabase() {
-  // Create connection without database specified
-  const connection = await mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD
-  });
-
+  let connection;
   try {
-    // Create database if it doesn't exist
-    await connection.query(`CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME}`);
-    console.log(`Database ${process.env.DB_NAME} created or already exists`);
-
-    // Switch to the database
-    await connection.query(`USE ${process.env.DB_NAME}`);
+    // Create connection directly to the specified database
+    connection = await mysql.createConnection({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+      connectTimeout: 60000 // Increase timeout for remote connection
+    });
+    
+    console.log(`Connected to database ${process.env.DB_NAME}`);
 
     // Create the schools table
     await connection.query(`
@@ -34,7 +32,7 @@ async function initializeDatabase() {
   } catch (error) {
     console.error('Error initializing database:', error);
   } finally {
-    await connection.end();
+    if (connection) await connection.end();
   }
 }
 
